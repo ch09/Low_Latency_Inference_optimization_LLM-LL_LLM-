@@ -1,0 +1,17 @@
+You are a helpful AI assistant. Please read the following passage carefully and answer the question at the end.
+
+The history of computing is a fascinating journey that spans centuries. The earliest known computing device is the abacus, which was invented in ancient Mesopotamia around 2400 BC. The abacus was used for basic arithmetic operations and remained the primary computing tool for thousands of years.
+
+In the 17th century, Blaise Pascal invented the Pascaline, a mechanical calculator that could perform addition and subtraction. This was followed by Gottfried Wilhelm Leibniz's Step Reckoner, which could also multiply and divide. These mechanical calculators laid the groundwork for more complex computing machines.
+
+Charles Babbage is often called the "father of the computer" for his design of the Analytical Engine in the 1830s. Although never completed during his lifetime, the Analytical Engine contained many features of modern computers, including an arithmetic logic unit, control flow through conditional branching and loops, and integrated memory. Ada Lovelace, who worked with Babbage, is credited with writing the first computer algorithm.
+
+The 20th century saw rapid advances in computing. Alan Turing's theoretical work on the Turing machine in 1936 established the mathematical foundation for computation. During World War II, several electronic computers were built, including Colossus in Britain and ENIAC in the United States. These machines used vacuum tubes and were enormous in size.
+
+The invention of the transistor at Bell Labs in 1947 revolutionized computing. Transistors were smaller, faster, and more reliable than vacuum tubes. The subsequent development of integrated circuits in the late 1950s allowed thousands of transistors to be placed on a single chip, leading to dramatic reductions in the size and cost of computers.
+
+The personal computer revolution began in the 1970s with machines like the Altair 8800, Apple II, and IBM PC. The development of graphical user interfaces, the internet, and the World Wide Web in the following decades transformed computers from specialized tools into essential everyday devices.
+
+Today, computing continues to evolve with advances in artificial intelligence, quantum computing, and cloud computing. Modern smartphones contain more computing power than the early room-sized computers, demonstrating the remarkable progress that has been made.
+
+Question: Based on the passage above, list the major milestones in computing history in chronological order, and explain how each milestone built upon the previous one. What pattern do you observe in the evolution of computing technology?
