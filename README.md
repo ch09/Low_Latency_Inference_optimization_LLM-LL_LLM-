@@ -153,6 +153,14 @@ LL_LLM/
 
 ---
 
+## References
+
+- **Enhancing LLM Performance: Efficacy, Fine-Tuning, and Inference Techniques** — Peyman Passban, Mehdi Rezagholizadeh, Andy Way (Springer, 2025)
+- [llama.cpp](https://github.com/ggerganov/llama.cpp) — Pure C/C++ LLM inference engine
+- [GGUF Format Specification](https://github.com/ggerganov/ggml/blob/master/docs/gguf.md) — Model format used in this project
+
+---
+
 ## License
 
 MIT License — see [LICENSE](LICENSE) for details.
