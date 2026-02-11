@@ -33,7 +33,7 @@ flowchart LR
     subgraph Input
         A[User Prompt]
     end
-    subgraph Engine["🔧 Our Optimized Engine"]
+    subgraph Engine["Our Optimized Engine"]
         B[Tokenizer]
         C[Model Loader]
         D[Inference Engine]
@@ -54,13 +54,13 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-    P0["🎯 Phase 0\nDefine Objective\n& Metrics"]
-    P1["🔧 Phase 1\nBaseline System\nllama.cpp + 7B Model"]
-    P2["🔍 Phase 2\nProfiling &\nBottleneck Analysis"]
-    P3["📊 Phase 3\nQuantization\nStudy"]
-    P4["⚡ Phase 4\nAdvanced\nOptimizations"]
-    P5["📈 Phase 5\nEvaluation\nFramework"]
-    P6["🔥 Phase 6\nPortfolio\nFeatures"]
+    P0["Phase 0\nDefine Objective\n& Metrics"]
+    P1["Phase 1\nBaseline System\nllama.cpp + 7B Model"]
+    P2["Phase 2\nProfiling &\nBottleneck Analysis"]
+    P3["Phase 3\nQuantization\nStudy"]
+    P4["Phase 4\nAdvanced\nOptimizations"]
+    P5["Phase 5\nEvaluation\nFramework"]
+    P6["Phase 6\nPortfolio\nFeatures"]
 
     P0 --> P1
     P1 --> P2
@@ -105,12 +105,12 @@ sequenceDiagram
     User->>Tokenizer: "What is the capital of France?"
     Tokenizer->>Prefill: [Token IDs: 1734, 338, 278, ...]
 
-    Note over Prefill: 🔵 PREFILL PHASE<br/>Process ALL input tokens<br/>in ONE forward pass<br/>(compute-bound)
+    Note over Prefill: PREFILL PHASE<br/>Process ALL input tokens<br/>in ONE forward pass<br/>(compute-bound)
 
     Prefill->>Decode: KV Cache populated
 
     loop For each output token
-        Note over Decode: 🟢 DECODE PHASE<br/>Generate ONE token<br/>per forward pass<br/>(memory-bound)
+        Note over Decode: DECODE PHASE<br/>Generate ONE token<br/>per forward pass<br/>(memory-bound)
         Decode->>Decode: Token → Attention → FFN → Logits → Sample
     end
 
@@ -226,21 +226,21 @@ flowchart TB
 
 ```mermaid
 flowchart LR
-    ROOT["📂 LL_LLM/"]
-    README["📄 README.md\nResearch proposal"]
-    CMAKE["📄 CMakeLists.txt\nBuild system"]
+    ROOT["LL_LLM/"]
+    README["README.md\nResearch proposal"]
+    CMAKE["CMakeLists.txt\nBuild system"]
 
-    SRC["📂 src/"]
-    MAIN["📄 main.cpp\nEntry point"]
-    BENCH_CPP["📄 benchmark.h\nMetrics collection"]
-    SYSINFO["📄 sysinfo.h\nHW detection"]
+    SRC["src/"]
+    MAIN["main.cpp\nEntry point"]
+    BENCH_CPP["benchmark.h\nMetrics collection"]
+    SYSINFO["sysinfo.h\nHW detection"]
 
-    BENCHDIR["📂 benchmarks/"]
-    PROMPTS["📂 prompts/\nTest prompts"]
+    BENCHDIR["benchmarks/"]
+    PROMPTS["prompts/\nTest prompts"]
 
-    RESULTS_DIR["📂 results/\nBenchmark output"]
-    SCRIPTS["📂 scripts/\nAutomation"]
-    DOCS["📂 docs/\nDocumentation"]
+    RESULTS_DIR["results/\nBenchmark output"]
+    SCRIPTS["scripts/\nAutomation"]
+    DOCS["docs/\nDocumentation"]
 
     ROOT --> README
     ROOT --> CMAKE
@@ -267,19 +267,19 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    subgraph Target["🎯 Our Target"]
+    subgraph Target["Our Target"]
         CPU["CPU Only<br/>Intel Core Ultra"]
         LAPTOP["Laptop-Class<br/>~64GB RAM"]
         LATENCY["< 100ms<br/>First Token"]
     end
 
-    subgraph Model["📦 Target Model"]
+    subgraph Model["Target Model"]
         SIZE["7B Parameters"]
         FORMAT["GGUF Format"]
         QUANT_T["Q4_K_M<br/>Quantization"]
     end
 
-    subgraph NonGoals["❌ Non-Goals"]
+    subgraph NonGoals["Non-Goals"]
         GPU_NG["GPU / CUDA"]
         TRAIN["Training"]
         DIST["Distributed"]
@@ -324,7 +324,7 @@ sequenceDiagram
     LLAMA->>MEM: Allocate KV cache
     LLAMA-->>CLI: context handle
 
-    Note over CLI: ⏱️ Start timer
+    Note over CLI: Start timer
 
     CLI->>LLAMA: llama_decode(ctx, prompt_tokens)
     Note over LLAMA: Prefill: process all<br/>prompt tokens at once
@@ -333,7 +333,7 @@ sequenceDiagram
     LLAMA-->>CLI: logits[]
     CLI->>CLI: Sample token from logits
 
-    Note over CLI: ⏱️ Record First Token Latency
+    Note over CLI: Record First Token Latency
 
     loop Until EOS or max_tokens
         CLI->>LLAMA: llama_decode(ctx, new_token)
@@ -341,28 +341,28 @@ sequenceDiagram
         CLI->>CLI: Sample next token
     end
 
-    Note over CLI: ⏱️ Calculate tokens/sec
-    Note over CLI: 📊 Record peak RAM
+    Note over CLI: Calculate tokens/sec
+    Note over CLI: Record peak RAM
 ```
 
 ### What We Measure in Baseline
 
 ```mermaid
 flowchart TB
-    subgraph Baseline["📌 Baseline Measurement (Control Group)"]
+    subgraph Baseline["Baseline Measurement (Control Group)"]
         direction TB
         CONFIG["Configuration:<br/>• Model: 7B Q4_K_M<br/>• Temperature: 0<br/>• Threads: auto<br/>• Seed: fixed"]
 
         PROMPTS["3 Prompt Types"]
-        SHORT["📝 Short\n'What is 2+2?'"]
-        LONG["📝 Long\n500+ token context"]
-        REASON["📝 Reasoning\nLogic puzzle"]
+        SHORT["Short\n'What is 2+2?'"]
+        LONG["Long\n500+ token context"]
+        REASON["Reasoning\nLogic puzzle"]
 
         PROMPTS --> SHORT
         PROMPTS --> LONG
         PROMPTS --> REASON
 
-        RECORD["📊 Recorded Metrics"]
+        RECORD["Recorded Metrics"]
         M1["First Token: ___ms"]
         M2["Tokens/sec: ___"]
         M3["Peak RAM: ___MB"]
@@ -390,7 +390,7 @@ We use the **Visual Studio Performance Profiler** to identify where time is spen
 
 ```mermaid
 flowchart TB
-    PROFILE["🔍 Run Profiler"]
+    PROFILE["Run Profiler"]
     CPU_PROF["CPU Sampling<br/>Where is time spent?"]
     MEM_PROF["Memory Usage<br/>Where are allocations?"]
     THREAD_PROF["Concurrency<br/>Are threads idle?"]
@@ -488,9 +488,9 @@ This is what we'll fill in during Phase 3:
 ```mermaid
 flowchart TB
     subgraph TestSuite["Test Suite for Accuracy"]
-        MATH["🔢 Math Problems<br/>'What is 17 × 23?'<br/>Expected: 391"]
-        LOGIC["🧩 Logic Tests<br/>'If A > B and B > C,<br/>is A > C?'<br/>Expected: Yes"]
-        FACT["📚 Factual<br/>'Capital of France?'<br/>Expected: Paris"]
+        MATH["Math Problems<br/>'What is 17 x 23?'<br/>Expected: 391"]
+        LOGIC["Logic Tests<br/>'If A > B and B > C,<br/>is A > C?'<br/>Expected: Yes"]
+        FACT["Factual<br/>'Capital of France?'<br/>Expected: Paris"]
     end
 
     subgraph Eval["Evaluation"]
@@ -520,13 +520,13 @@ The KV cache stores the Key and Value matrices from previous tokens so they don'
 
 ```mermaid
 flowchart TB
-    subgraph Problem["❌ Problem: KV Cache Growth"]
+    subgraph Problem["Problem: KV Cache Growth"]
         direction LR
         T1["Token 1<br/>K₁, V₁"] --> T2["Token 2<br/>K₁₋₂, V₁₋₂"] --> T3["Token 3<br/>K₁₋₃, V₁₋₃"] --> TN["Token N<br/>K₁₋ₙ, V₁₋ₙ"]
         MEM["Memory grows<br/>O(n × d × layers)"]
     end
 
-    subgraph Solutions["✅ Solutions"]
+    subgraph Solutions["Solutions"]
         direction TB
         POOL["Memory Pooling<br/>Pre-allocate fixed buffer<br/>Avoid malloc/free per token"]
         COMPRESS["Cache Compression<br/>Store K,V in lower precision<br/>(FP16 → INT8)"]
@@ -545,16 +545,16 @@ flowchart TB
 flowchart TB
     subgraph Current["Current: Default Threading"]
         direction LR
-        C0["Core 0<br/>🟢 Working"] --- C1["Core 1<br/>🟢 Working"]
-        C2["Core 2<br/>🔴 Idle"] --- C3["Core 3<br/>🔴 Idle"]
-        C4["Core 4<br/>🟡 Waiting<br/>on lock"] --- C5["Core 5<br/>🔴 Idle"]
+        C0["Core 0<br/>Working"] --- C1["Core 1<br/>Working"]
+        C2["Core 2<br/>Idle"] --- C3["Core 3<br/>Idle"]
+        C4["Core 4<br/>Waiting<br/>on lock"] --- C5["Core 5<br/>Idle"]
     end
 
     subgraph Optimized["Optimized: Pinned Thread Pool"]
         direction LR
-        O0["Core 0<br/>🟢 MatMul Block 0"] --- O1["Core 1<br/>🟢 MatMul Block 1"]
-        O2["Core 2<br/>🟢 MatMul Block 2"] --- O3["Core 3<br/>🟢 MatMul Block 3"]
-        O4["Core 4<br/>🟢 MatMul Block 4"] --- O5["Core 5<br/>🟢 MatMul Block 5"]
+        O0["Core 0<br/>MatMul Block 0"] --- O1["Core 1<br/>MatMul Block 1"]
+        O2["Core 2<br/>MatMul Block 2"] --- O3["Core 3<br/>MatMul Block 3"]
+        O4["Core 4<br/>MatMul Block 4"] --- O5["Core 5<br/>MatMul Block 5"]
     end
 
     Current -->|"Thread pinning +<br/>work stealing"| Optimized
@@ -602,14 +602,14 @@ sequenceDiagram
         Note over Target: Verify ALL 5 in ONE forward pass
         Draft->>Target: ["The", "capital", "of", "France", "is"]
         Target->>Target: Batch verify (50ms)
-        Target->>Output: ✅ "The" accepted
-        Target->>Output: ✅ "capital" accepted
-        Target->>Output: ✅ "of" accepted
-        Target->>Output: ✅ "France" accepted
-        Target->>Output: ❌ "is" rejected → resample
+        Target->>Output: "The" accepted
+        Target->>Output: "capital" accepted
+        Target->>Output: "of" accepted
+        Target->>Output: "France" accepted
+        Target->>Output: "is" rejected -> resample
     end
 
-    Note over Output: Result: 4 tokens in 75ms<br/>vs 4 × 50ms = 200ms normally<br/>🚀 2.7× speedup!
+    Note over Output: Result: 4 tokens in 75ms<br/>vs 4 x 50ms = 200ms normally<br/>2.7x speedup!
 ```
 
 ### 4D — SIMD Matrix Multiplication
@@ -618,17 +618,17 @@ SIMD (Single Instruction, Multiple Data) processes multiple values per CPU instr
 
 ```mermaid
 flowchart TB
-    subgraph Scalar["❌ Scalar: 1 operation at a time"]
+    subgraph Scalar["Scalar: 1 operation at a time"]
         direction LR
         S1["a₁ × b₁"] --> S2["a₂ × b₂"] --> S3["a₃ × b₃"] --> S4["a₄ × b₄"]
         S5["a₅ × b₅"] --> S6["a₆ × b₆"] --> S7["a₇ × b₇"] --> S8["a₈ × b₈"]
-        ST["⏱️ 8 cycles"]
+        ST["8 cycles"]
     end
 
-    subgraph AVX2["✅ AVX2: 8 operations simultaneously"]
+    subgraph AVX2["AVX2: 8 operations simultaneously"]
         direction LR
         V1["a₁×b₁  a₂×b₂  a₃×b₃  a₄×b₄  a₅×b₅  a₆×b₆  a₇×b₇  a₈×b₈"]
-        VT["⏱️ 1 cycle"]
+        VT["1 cycle"]
     end
 
     Scalar -->|"8× theoretical<br/>speedup"| AVX2
@@ -641,12 +641,12 @@ flowchart TB
 
 ```mermaid
 flowchart TB
-    subgraph Naive["❌ Naive: Full Matrix Access"]
+    subgraph Naive["Naive: Full Matrix Access"]
         direction TB
         NM["Access pattern jumps across<br/>entire matrix randomly<br/>→ Cache misses everywhere"]
     end
 
-    subgraph Tiled["✅ Tiled: Block-by-Block"]
+    subgraph Tiled["Tiled: Block-by-Block"]
         direction TB
         subgraph Matrix["Matrix (4096 × 4096)"]
             T1["Tile 1<br/>64×64"] --- T2["Tile 2<br/>64×64"] --- T3["Tile 3<br/>64×64"]
@@ -684,9 +684,9 @@ flowchart TB
     end
 
     subgraph Output["Output Artifacts"]
-        JSON_OUT["📄 results.json<br/>Raw data"]
-        CSV_OUT["📄 results.csv<br/>Tabular"]
-        GRAPHS_OUT["📊 Graphs<br/>PNG/SVG"]
+        JSON_OUT["results.json<br/>Raw data"]
+        CSV_OUT["results.csv<br/>Tabular"]
+        GRAPHS_OUT["Graphs<br/>PNG/SVG"]
     end
 
     Suite --> Runner --> Output
@@ -735,7 +735,7 @@ sequenceDiagram
 
     User->>CLI: Type prompt + Enter
 
-    Note over CLI: ⏱️ Target: <100ms to first token
+    Note over CLI: Target: <100ms to first token
 
     CLI->>Engine: Start inference
     Engine-->>CLI: Token "The" (85ms)
@@ -788,21 +788,21 @@ flowchart TB
 
 ```mermaid
 flowchart TB
-    subgraph Detection["🔍 Hardware Detection"]
+    subgraph Detection["Hardware Detection"]
         CORES["CPU Cores: ?"]
         CACHE["L1/L2/L3 Cache: ?"]
         RAM_DET["Total RAM: ?"]
         SIMD_DET["SIMD Support: ?"]
     end
 
-    subgraph Tuning["⚙️ Auto-Configuration"]
+    subgraph Tuning["Auto-Configuration"]
         THREADS_SET["Thread Count =<br/>f(cores, cache)"]
         BATCH_SET["Batch Size =<br/>f(RAM, model)"]
         TILE_SET["Tile Size =<br/>f(L1 cache)"]
         QUANT_SET["Quantization =<br/>f(RAM, accuracy)"]
     end
 
-    subgraph Output_Config["📄 Optimal Config"]
+    subgraph Output_Config["Optimal Config"]
         CONF["threads: 8<br/>batch: 512<br/>tile: 64<br/>quant: Q4_K_M"]
     end
 

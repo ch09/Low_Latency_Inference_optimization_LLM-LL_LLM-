@@ -4,7 +4,7 @@
 
 ---
 
-## 🎯 Objective
+## Objective
 
 This project investigates **how fast we can run LLM inference on a CPU-only laptop** through systematic profiling and optimization of every layer in the inference pipeline.
 
@@ -28,7 +28,7 @@ This project investigates **how fast we can run LLM inference on a CPU-only lapt
 
 ---
 
-## 📊 Metrics
+## Metrics
 
 Every optimization is measured against these metrics. No blind optimization — **data drives decisions**.
 
@@ -42,9 +42,9 @@ Every optimization is measured against these metrics. No blind optimization — 
 
 ---
 
-## 🏗️ Project Phases
+## Project Phases
 
-### Phase 0 — Define Objective ✅
+### Phase 0 — Define Objective (Done)
 
 Define target hardware, metrics, and project structure.
 
@@ -88,7 +88,7 @@ Pick 2-3 from:
 
 ---
 
-## 🔧 Building
+## Building
 
 ### Prerequisites
 
@@ -112,7 +112,7 @@ cmake --build build --config Release
 
 ---
 
-## 📦 Models
+## Models
 
 Models are **not included** in the repository. Download GGUF models from [Hugging Face](https://huggingface.co/) and place them in the `models/` directory.
 
@@ -126,7 +126,7 @@ Models are **not included** in the repository. Download GGUF models from [Huggin
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 LL_LLM/
@@ -153,12 +153,12 @@ LL_LLM/
 
 ---
 
-## 📄 License
+## License
 
 MIT License — see [LICENSE](LICENSE) for details.
 
 ---
 
-## 👤 Author
+## Author
 
 Walid Chebbi — Systems & Performance Engineering
