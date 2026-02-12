@@ -166,5 +166,5 @@ def main() -> None:
     success("Done.")
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": # __main__ is a special built-in variable 
     main()

@@ -9,7 +9,7 @@
 # =============================================================================
 
 param(
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [string]$ModelPath,
 
     [int]$Threads = 0,
@@ -50,7 +50,8 @@ if (-not $SkipBuild) {
 
     Pop-Location
     Write-Host "[1/4] Build complete." -ForegroundColor Green
-} else {
+}
+else {
     Write-Host "[1/4] Skipping build (--SkipBuild)." -ForegroundColor DarkGray
 }
 
@@ -82,10 +83,11 @@ $PromptsDir = Join-Path $ProjectRoot "benchmarks\prompts"
 $FullOutputDir = Join-Path $ProjectRoot $OutputDir
 
 # Create output directory
-New-Item -ItemType Directory -Force -Path $FullOutputDir | Out-Null
+if (-not (Test-Path $FullOutputDir)) {
+    New-Item -ItemType Directory -Force -Path $FullOutputDir | Out-Null
+}
 
 $PromptTypes = @("short", "long", "reasoning")
-$ThreadArg = if ($Threads -gt 0) { "--threads $Threads" } else { "" }
 
 foreach ($type in $PromptTypes) {
     $promptFile = Join-Path $PromptsDir "$type.txt"
@@ -98,13 +100,24 @@ foreach ($type in $PromptTypes) {
     Write-Host ""
     Write-Host "--- Running: $type prompt ---" -ForegroundColor Cyan
 
-    $cmd = "$Executable --model `"$FullModelPath`" --prompt `"@$promptFile`" --prompt-type $type --max-tokens $MaxTokens --output-dir `"$FullOutputDir`" $ThreadArg"
+    $argsList = @(
+        "--model", $FullModelPath,
+        "--prompt", "@$promptFile",
+        "--prompt-type", $type,
+        "--max-tokens", $MaxTokens,
+        "--output-dir", $FullOutputDir
+    )
+    if ($Threads -gt 0) {
+        $argsList += "--threads"
+        $argsList += "$Threads"
+    }
 
-    Write-Host "Command: $cmd" -ForegroundColor DarkGray
-    Invoke-Expression $cmd
+    Write-Host "Executing: $Executable $($argsList -join ' ')" -ForegroundColor DarkGray
+    
+    $proc = Start-Process -FilePath $Executable -ArgumentList $argsList -NoNewWindow -Wait -PassThru
 
-    if ($LASTEXITCODE -ne 0) {
-        Write-Host "WARNING: Benchmark failed for $type prompt." -ForegroundColor Yellow
+    if ($proc.ExitCode -ne 0) {
+        Write-Host "WARNING: Benchmark failed for $type prompt (Exist code: $($proc.ExitCode))." -ForegroundColor Yellow
     }
 
     Write-Host ""
@@ -119,7 +132,7 @@ Write-Host "Results saved to: $FullOutputDir" -ForegroundColor Cyan
 Write-Host ""
 
 $resultFiles = Get-ChildItem -Path $FullOutputDir -Filter "*.json" | Sort-Object LastWriteTime -Descending | Select-Object -First 5
-if ($resultFiles.Count -gt 0) {
+if ($resultFiles) {
     Write-Host "Recent result files:" -ForegroundColor Yellow
     foreach ($f in $resultFiles) {
         Write-Host "  $($f.Name)" -ForegroundColor White
