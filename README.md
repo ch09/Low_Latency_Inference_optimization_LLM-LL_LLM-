@@ -145,7 +145,7 @@ LL_LLM/
 ├── results/                   # Benchmark output (gitignored)
 ├── models/                    # GGUF models (gitignored)
 ├── scripts/
-│   └── run_baseline.ps1       # Automated benchmark runner
+│   └── run_baseline.py        # Automated benchmark runner
 └── docs/
     ├── project_documentation.md  # Full technical documentation
     └── profiling_notes.md        # Phase 2 findings

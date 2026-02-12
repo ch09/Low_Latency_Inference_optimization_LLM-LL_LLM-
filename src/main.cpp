@@ -19,11 +19,9 @@
 #include <string>
 #include <vector>
 
-
 #include "benchmark.h"
 #include "llama.h"
 #include "sysinfo.h"
-
 
 namespace fs = std::filesystem;
 
@@ -214,7 +212,8 @@ int main(int argc, char **argv) {
   ctx_params.n_ctx = 2048;
   ctx_params.n_threads = n_threads;
   ctx_params.n_threads_batch = n_threads;
-  ctx_params.seed = static_cast<uint32_t>(args.seed);
+  // Note: seed is no longer part of llama_context_params in latest llama.cpp
+  // For greedy decoding (temperature=0), seed has no effect anyway
 
   llama_context *ctx = llama_init_from_model(model, ctx_params);
   if (!ctx) {
@@ -254,15 +253,12 @@ int main(int argc, char **argv) {
   ll_llm::Timer first_token_timer;
   first_token_timer.start();
 
-  llama_batch batch = llama_batch_init(n_prompt_tokens, 0, 1);
-  for (int i = 0; i < n_prompt_tokens; ++i) {
-    llama_batch_add(batch, prompt_tokens[i], i, {0},
-                    (i == n_prompt_tokens - 1));
-  }
+  // Use llama_batch_get_one for simple single-sequence prompt prefill
+  llama_batch batch =
+      llama_batch_get_one(prompt_tokens.data(), n_prompt_tokens);
 
   if (llama_decode(ctx, batch) != 0) {
     std::cerr << "ERROR: Failed to decode prompt.\n";
-    llama_batch_free(batch);
     llama_free(ctx);
     llama_model_free(model);
     llama_backend_free();
@@ -317,9 +313,8 @@ int main(int argc, char **argv) {
 
     ++tokens_generated;
 
-    // Prepare next batch
-    llama_batch_clear(batch);
-    llama_batch_add(batch, new_token_id, n_prompt_tokens + i, {0}, true);
+    // Prepare next batch — single token decode
+    batch = llama_batch_get_one(&new_token_id, 1);
 
     if (llama_decode(ctx, batch) != 0) {
       std::cerr << "\nERROR: Decode failed at token " << i << "\n";
@@ -354,7 +349,7 @@ int main(int argc, char **argv) {
   // =====================================================================
   // Cleanup
   // =====================================================================
-  llama_batch_free(batch);
+  // Note: llama_batch_get_one() does not allocate — no need to free
   llama_free(ctx);
   llama_model_free(model);
   llama_backend_free();
